@@ -6,16 +6,19 @@ public class PlayerController : MonoBehaviour
 	[Header("Input Actions")]
 	[SerializeField] private InputAction moveAction;
 
-	[Header("Character speed")]
+	[Header("Character properties")]
 	[SerializeField] private float movementSpeed = 3f;
+	[SerializeField] private int maxHealth = 5;
 
 	private Rigidbody2D rigidBody2D;
-	Vector2 move;
+	private Vector2 move;
+	private int currentHealth;
 
 	private void Start()
 	{
 		moveAction.Enable();
 		rigidBody2D = GetComponent<Rigidbody2D>();
+		currentHealth = maxHealth;
 	}
 
 	void Update()
@@ -27,5 +30,11 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector2 position = rigidBody2D.position + movementSpeed * Time.deltaTime * move;
 		rigidBody2D.MovePosition(position);
+	}
+
+	private void ChangeHealth(int amount)
+	{
+		currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+		Debug.Log(currentHealth + "/" + maxHealth);
 	}
 }
