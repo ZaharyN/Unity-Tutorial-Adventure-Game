@@ -9,16 +9,23 @@ public class PlayerController : MonoBehaviour
 	[Header("Character speed")]
 	[SerializeField] private float movementSpeed = 3f;
 
+	private Rigidbody2D rigidBody2D;
+	Vector2 move;
+
 	private void Start()
 	{
 		moveAction.Enable();
+		rigidBody2D = GetComponent<Rigidbody2D>();
 	}
 
 	void Update()
 	{
-		Vector2 move = moveAction.ReadValue<Vector2>();
+		move = moveAction.ReadValue<Vector2>();
+	}
 
-		Vector2 position = (Vector2)transform.position + Time.deltaTime * move * movementSpeed;
-		transform.position = position;
+	private void FixedUpdate()
+	{
+		Vector2 position = rigidBody2D.position + movementSpeed * Time.deltaTime * move;
+		rigidBody2D.MovePosition(position);
 	}
 }
