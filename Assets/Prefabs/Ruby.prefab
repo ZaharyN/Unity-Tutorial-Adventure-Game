@@ -114,7 +114,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &8839119847386475522
@@ -172,98 +172,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8766011121046087177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647dda9513bbb5243ab8080c0ac10bb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 94c28249cee997e41bcd2f24c60e37e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveAction:
     m_Name: Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 2e8f9a02-ccb5-4bf6-a9df-bfd179d39a8d
+    m_Id: c37011cf-ecdf-4053-8d57-81d75b43fbc0
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 2D Vector
-      m_Id: 83c076e3-4cd4-48c5-bb59-e1ecea577450
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 4
-    - m_Name: up
-      m_Id: ee460646-bb56-4a5d-8631-ccb0a95f82a7
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 075d2997-acf7-4732-b46f-9ce2fff52f23
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: left
-      m_Id: cc0285bf-038e-42a9-9300-35ea9dc5f5f7
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: right
-      m_Id: f5d2f59a-d6bf-4050-9af4-b60da6104558
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: 2D Vector
-      m_Id: 4e9eebf4-c2ab-4927-b8be-d3dd61ba59b3
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 4
-    - m_Name: up
-      m_Id: fc8a0a41-7f41-438a-82a0-ddfc7dc91be5
-      m_Path: <Keyboard>/upArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: down
-      m_Id: b7b6a6a1-b5c1-4d0a-8a3c-198a4b905579
-      m_Path: <Keyboard>/downArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 83d1178a-666d-4556-aa9e-a6d5a2843f2c
-      m_Path: <Keyboard>/leftArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: right
-      m_Id: b308ca8c-35e9-4e2c-988f-8cb1ab135981
-      m_Path: <Keyboard>/rightArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
+    m_SingletonActionBindings: []
     m_Flags: 0
   movementSpeed: 3
   maxHealth: 5
-  timeInvincible: 3
+  timeInvincible: 2
