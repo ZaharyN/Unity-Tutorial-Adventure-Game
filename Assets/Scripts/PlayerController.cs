@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float timeInvincible = 2.0f;
 
 	private Rigidbody2D rigidBody2D;
+	private Animator animator;
+	private Vector2 moveDirection = new Vector2(1, 0);
 	private Vector2 move;
 	private int currentHealth;
 	private bool isInvincible;
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
 	{
 		moveAction.Enable();
 		rigidBody2D = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
 		currentHealth = maxHealth;
 	}
 
@@ -33,6 +37,16 @@ public class PlayerController : MonoBehaviour
 	{
 		move = moveAction.ReadValue<Vector2>();
 
+		if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+		{
+			moveDirection.Set(move.x, move.y);
+			moveDirection.Normalize();
+		}
+		
+		animator.SetFloat("Look X", moveDirection.x);
+		animator.SetFloat("Look Y", moveDirection.y);
+		animator.SetFloat("Speed", move.magnitude);
+		
 		if (isInvincible)
 		{
 			damageCooldown -= Time.deltaTime;
@@ -54,6 +68,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (amount < 0)
 		{
+			animator.SetTrigger("Hit");
 			if (isInvincible)
 			{
 				return;

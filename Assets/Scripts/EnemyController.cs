@@ -9,12 +9,14 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float reverseMovementTimer = 5.0f;
 
     private Rigidbody2D rigidBody2D;
+    private Animator animator;
     private int direction = 1;
     private float currentMovementTimer = 0.0f;
 
     void Start()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         currentMovementTimer = 0.0f;
     }
 
@@ -37,10 +39,14 @@ public class EnemyController : MonoBehaviour
         if (isVertical)
         {
             position.y += Time.deltaTime * movementSpeed * direction;
+            animator.SetFloat("MoveX", 0);
+            animator.SetFloat("MoveY", direction);
         }
         else
         {
             position.x += Time.deltaTime * movementSpeed * direction;
+            animator.SetFloat("MoveX", direction);
+            animator.SetFloat("MoveY", 0);
         }
 
         rigidBody2D.MovePosition(position);
