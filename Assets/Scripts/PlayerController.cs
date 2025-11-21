@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Character properties")]
 	[SerializeField] private float movementSpeed = 3.0f;
+	[SerializeField] private float projectileForce = 300.0f;
 	[SerializeField] private int maxHealth = 5;
 
 	[Header("Character invincibility")]
@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 	private int currentHealth;
 	private bool isInvincible;
 	private float damageCooldown;
+
+	public GameObject projectilePrefab;
 
 	public int CurrentHealth { get { return currentHealth; } }
 	public int MaxHealth { get { return maxHealth; } }
@@ -42,11 +44,11 @@ public class PlayerController : MonoBehaviour
 			moveDirection.Set(move.x, move.y);
 			moveDirection.Normalize();
 		}
-		
+
 		animator.SetFloat("Look X", moveDirection.x);
 		animator.SetFloat("Look Y", moveDirection.y);
 		animator.SetFloat("Speed", move.magnitude);
-		
+
 		if (isInvincible)
 		{
 			damageCooldown -= Time.deltaTime;
@@ -55,6 +57,11 @@ public class PlayerController : MonoBehaviour
 			{
 				isInvincible = false;
 			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.C))
+		{
+			Launch();
 		}
 	}
 
@@ -79,5 +86,16 @@ public class PlayerController : MonoBehaviour
 
 		currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
 		UIHandler.Instance.SetHealthValue(CurrentHealth / (float)maxHealth);
+	}
+
+	private void Launch()
+	{
+		GameObject projectileObject = Instantiate(projectilePrefab, rigidBody2D.position + Vector2.up * 0.5f, Quaternion.identity);
+		Projectile projectile = projectileObject.GetComponent<Projectile>();
+		if (projectile != null)
+		{
+			projectile.Launch(moveDirection, projectileForce);
+			animator.SetTrigger("Launch");
+		}
 	}
 }
