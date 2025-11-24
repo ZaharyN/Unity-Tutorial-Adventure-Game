@@ -225,6 +225,23 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
+  talkAction:
+    m_Name: Talk
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 9f24d41f-c528-478d-ab4e-30468643d68d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 41d303a7-0b28-4ea6-b63a-7836e80771c6
+      m_Path: <Keyboard>/x
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Talk
+      m_Flags: 0
+    m_Flags: 0
   movementSpeed: 10
   projectileForce: 300
   maxHealth: 5

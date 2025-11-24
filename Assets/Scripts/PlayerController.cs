@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
 	[Header("Input Actions")]
 	[SerializeField] private InputAction moveAction;
+	[SerializeField] private InputAction talkAction;
 
 	[Header("Character properties")]
 	[SerializeField] private float movementSpeed = 3.0f;
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
 		moveAction.Enable();
+		talkAction.Enable();
+
 		rigidBody2D = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 		currentHealth = maxHealth;
@@ -63,6 +66,11 @@ public class PlayerController : MonoBehaviour
 		{
 			Launch();
 		}
+
+		if (Input.GetKeyDown(KeyCode.X))
+		{
+			FindFriend();
+		}
 	}
 
 	private void FixedUpdate()
@@ -90,12 +98,26 @@ public class PlayerController : MonoBehaviour
 
 	private void Launch()
 	{
-		GameObject projectileObject = Instantiate(projectilePrefab, rigidBody2D.position + Vector2.up * 0.5f, Quaternion.identity);
+		GameObject projectileObject = Instantiate(projectilePrefab, rigidBody2D.position, Quaternion.identity);
 		Projectile projectile = projectileObject.GetComponent<Projectile>();
 		if (projectile != null)
 		{
 			projectile.Launch(moveDirection, projectileForce);
 			animator.SetTrigger("Launch");
+		}
+	}
+
+	private void FindFriend()
+	{
+		RaycastHit2D hit = Physics2D.Raycast(rigidBody2D.position, moveDirection, 1.5f, LayerMask.GetMask("NPC"));
+
+		if (hit.collider != null)
+		{
+			NonPlayerCharacter npc = hit.collider.GetComponent<NonPlayerCharacter>();
+			if (npc != null)
+			{
+				UIHandler.Instance.DisplayDialogue();
+			}
 		}
 	}
 }
