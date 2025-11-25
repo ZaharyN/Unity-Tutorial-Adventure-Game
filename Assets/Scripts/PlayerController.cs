@@ -15,8 +15,13 @@ public class PlayerController : MonoBehaviour
 	[Header("Character invincibility")]
 	[SerializeField] private float timeInvincible = 2.0f;
 
+	[Header("Character sounds")]
+	[SerializeField] private AudioClip hitSound = default;
+	[SerializeField] private AudioClip projectileThrowSound = default;
+	
 	private Rigidbody2D rigidBody2D;
 	private Animator animator;
+	private AudioSource audioSource;
 	private Vector2 moveDirection = new Vector2(1, 0);
 	private Vector2 move;
 	private int currentHealth;
@@ -35,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
 		rigidBody2D = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
+
 		currentHealth = maxHealth;
 	}
 
@@ -83,13 +90,15 @@ public class PlayerController : MonoBehaviour
 	{
 		if (amount < 0)
 		{
-			animator.SetTrigger("Hit");
 			if (isInvincible)
 			{
 				return;
 			}
 			isInvincible = true;
 			damageCooldown = timeInvincible;
+			
+			animator.SetTrigger("Hit");
+			PlaySound(hitSound);
 		}
 
 		currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
@@ -100,10 +109,12 @@ public class PlayerController : MonoBehaviour
 	{
 		GameObject projectileObject = Instantiate(projectilePrefab, rigidBody2D.position, Quaternion.identity);
 		Projectile projectile = projectileObject.GetComponent<Projectile>();
+		
 		if (projectile != null)
 		{
 			projectile.Launch(moveDirection, projectileForce);
 			animator.SetTrigger("Launch");
+			PlaySound(projectileThrowSound);
 		}
 	}
 
@@ -119,5 +130,10 @@ public class PlayerController : MonoBehaviour
 				UIHandler.Instance.DisplayDialogue();
 			}
 		}
+	}
+
+	public void PlaySound(AudioClip audioClip)
+	{
+		audioSource.PlayOneShot(audioClip);
 	}
 }

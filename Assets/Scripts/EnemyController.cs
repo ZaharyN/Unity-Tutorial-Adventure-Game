@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -7,9 +6,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float movementSpeed = 3.0f;
     [SerializeField] private bool isVertical;
     [SerializeField] private float reverseMovementTimer = 5.0f;
-
+    [SerializeField] private ParticleSystem smokeEffect = default;
+    
     private Rigidbody2D rigidBody2D;
     private Animator animator;
+    private AudioSource audioSource;
     private int direction = 1;
     private float currentMovementTimer = 0.0f;
     private bool isBroken = true;
@@ -18,6 +19,8 @@ public class EnemyController : MonoBehaviour
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        
         currentMovementTimer = 0.0f;
     }
 
@@ -73,6 +76,9 @@ public class EnemyController : MonoBehaviour
 	public void Fix()
     {
         animator.SetTrigger("IsFixed");
+        audioSource.Stop();
+        smokeEffect.Stop();
+        
     	isBroken = false;
     	rigidBody2D.simulated = false;
     }
